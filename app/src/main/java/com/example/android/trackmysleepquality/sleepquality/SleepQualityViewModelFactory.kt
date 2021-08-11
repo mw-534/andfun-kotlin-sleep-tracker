@@ -15,3 +15,35 @@
  */
 
 package com.example.android.trackmysleepquality.sleepquality
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.example.android.trackmysleepquality.database.SleepDatabaseDao
+import java.lang.IllegalArgumentException
+
+/**
+* This is pretty much boiler plate code for a ViewModel Factory.
+*
+* Provides the key for the night and the SleepDatabaseDao to the ViewModel.
+*/
+class SleepQualityViewModelFactory(
+    val sleepNightKey: Long = 0L,
+    val database: SleepDatabaseDao) : ViewModelProvider.Factory {
+
+    /**
+     * Creates a new instance of the given `Class`.
+     *
+     *
+     *
+     * @param modelClass a `Class` whose instance is requested
+     * @param <T>        The type parameter for the ViewModel.
+     * @return a newly created ViewModel
+    </T> */
+    @Suppress("unchecked_cast")
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(SleepQualityViewModel::class.java)) {
+            return SleepQualityViewModel(sleepNightKey, database) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
+}
